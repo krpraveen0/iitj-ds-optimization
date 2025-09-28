@@ -2,6 +2,8 @@
 
 A comprehensive web-based learning platform for **Optimization in Data Science**, designed by IIT faculty to make complex optimization concepts accessible to students at all levels.
 
+🌐 **Live Site**: [https://krpraveen0.github.io/iitj-ds-optimization/](https://krpraveen0.github.io/iitj-ds-optimization/)
+
 ## 🎯 Overview
 
 This interactive learning platform covers optimization techniques from fundamental mathematical concepts to advanced machine learning applications. The content is structured progressively, with visual demonstrations, interactive examples, and practical code implementations.
@@ -60,8 +62,14 @@ This interactive learning platform covers optimization techniques from fundament
 - **Visualizations**: HTML5 Canvas with custom animations
 - **Icons**: Font Awesome
 - **Fonts**: Inter (Google Fonts)
+- **Deployment**: GitHub Pages with automated CI/CD
 
 ## 📱 Getting Started
+
+### 🌐 Access the Live Site
+Visit the deployed version at: **[https://krpraveen0.github.io/iitj-ds-optimization/](https://krpraveen0.github.io/iitj-ds-optimization/)**
+
+### 💻 Local Development
 
 1. **Clone the repository**:
    ```bash
@@ -80,6 +88,12 @@ This interactive learning platform covers optimization techniques from fundament
    # Or using Node.js http-server
    npx http-server
    ```
+
+### 🚀 Deployment
+The site is automatically deployed to GitHub Pages via GitHub Actions whenever changes are pushed to the main branch. The deployment workflow:
+- Builds and packages the site
+- Deploys to GitHub Pages
+- Updates the live site at the URL above
 
 ## 📖 Learning Path
 
