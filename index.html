@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimization for Data Science - IIT Learning Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <h1>OptimizeDS</h1>
+                    <span class="subtitle">IIT Learning Platform</span>
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="#home" class="nav-link active">Home</a></li>
+                        <li><a href="#fundamentals" class="nav-link">Fundamentals</a></li>
+                        <li><a href="#algorithms" class="nav-link">Algorithms</a></li>
+                        <li><a href="#applications" class="nav-link">Applications</a></li>
+                        <li><a href="#practice" class="nav-link">Practice</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Master Optimization for Data Science</h1>
+                    <p>Learn optimization techniques from fundamental mathematical concepts to advanced machine learning applications. Designed by IIT faculty for students at all levels.</p>
+                    <div class="hero-buttons">
+                        <a href="#fundamentals" class="btn btn-primary">Start Learning</a>
+                        <a href="#practice" class="btn btn-secondary">Practice Problems</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="optimization-demo">
+                        <canvas id="gradientCanvas" width="400" height="300"></canvas>
+                        <div class="demo-controls">
+                            <button id="startAnimation" class="btn-demo">Start Gradient Descent</button>
+                            <button id="resetAnimation" class="btn-demo">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Overview -->
+    <section class="course-overview">
+        <div class="container">
+            <h2>What You'll Learn</h2>
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Mathematical Foundations</h3>
+                    <p>Derivatives, gradients, Hessians, and convexity concepts explained with visual intuition</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Classical Algorithms</h3>
+                    <p>Linear programming, gradient descent, Newton's method, and constraint handling</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>ML Applications</h3>
+                    <p>Optimization in neural networks, hyperparameter tuning, and model selection</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Practical Implementation</h3>
+                    <p>Python code examples, real datasets, and hands-on programming exercises</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fundamentals Section -->
+    <section id="fundamentals" class="section">
+        <div class="container">
+            <h2>Mathematical Fundamentals</h2>
+            <div class="content-tabs">
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="derivatives">Derivatives & Gradients</button>
+                    <button class="tab-btn" data-tab="convexity">Convexity</button>
+                    <button class="tab-btn" data-tab="constraints">Constraints</button>
+                </div>
+
+                <div id="derivatives" class="tab-content active">
+                    <div class="concept-explanation">
+                        <h3>Understanding Derivatives and Gradients</h3>
+                        <p>In optimization, derivatives tell us the rate of change of a function. For data science, this helps us understand how small changes in our model parameters affect the loss function.</p>
+                        
+                        <div class="math-example">
+                            <h4>Single Variable Case</h4>
+                            <p>For a function $f(x) = x^2 + 2x + 1$, the derivative is:</p>
+                            <div class="math-display">$$f'(x) = 2x + 2$$</div>
+                            <p>This tells us the slope at any point $x$.</p>
+                        </div>
+
+                        <div class="interactive-demo">
+                            <h4>Interactive Visualization</h4>
+                            <div class="demo-container">
+                                <canvas id="derivativeCanvas" width="500" height="300"></canvas>
+                                <div class="demo-controls">
+                                    <label>x-value: <input type="range" id="xSlider" min="-3" max="3" step="0.1" value="0"></label>
+                                    <span id="xValue">x = 0</span>
+                                    <span id="derivativeValue">f'(x) = 2</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-example">
+                            <h4>Python Implementation</h4>
+                            <pre><code class="python">
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define function and its derivative
+def f(x):
+    return x**2 + 2*x + 1
+
+def f_prime(x):
+    return 2*x + 2
+
+# Calculate gradient at a point
+x = 1.0
+gradient = f_prime(x)
+print(f"Gradient at x={x}: {gradient}")
+
+# Numerical gradient (for verification)
+h = 1e-8
+numerical_gradient = (f(x + h) - f(x - h)) / (2 * h)
+print(f"Numerical gradient: {numerical_gradient}")
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="convexity" class="tab-content">
+                    <div class="concept-explanation">
+                        <h3>Convexity in Optimization</h3>
+                        <p>Convex functions are the "nice" functions in optimization. They have a single global minimum, making optimization algorithms reliable and predictable.</p>
+                        
+                        <div class="math-example">
+                            <h4>Mathematical Definition</h4>
+                            <p>A function $f$ is convex if for any two points $x_1, x_2$ and any $\lambda \in [0,1]$:</p>
+                            <div class="math-display">$$f(\lambda x_1 + (1-\lambda) x_2) \leq \lambda f(x_1) + (1-\lambda) f(x_2)$$</div>
+                        </div>
+
+                        <div class="visual-example">
+                            <h4>Visual Understanding</h4>
+                            <canvas id="convexityCanvas" width="500" height="300"></canvas>
+                            <div class="convexity-controls">
+                                <button id="showConvex" class="btn-demo">Show Convex Function</button>
+                                <button id="showNonConvex" class="btn-demo">Show Non-Convex Function</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="constraints" class="tab-content">
+                    <div class="concept-explanation">
+                        <h3>Handling Constraints</h3>
+                        <p>In real-world problems, we often have constraints on our variables. Understanding how to handle these is crucial for practical optimization.</p>
+                        
+                        <div class="constraint-types">
+                            <div class="constraint-type">
+                                <h4>Equality Constraints</h4>
+                                <p>$g(x) = 0$ - The solution must satisfy this exactly</p>
+                                <div class="example">Example: $x_1 + x_2 = 1$ (budget constraint)</div>
+                            </div>
+                            <div class="constraint-type">
+                                <h4>Inequality Constraints</h4>
+                                <p>$h(x) \leq 0$ - The solution must be in the feasible region</p>
+                                <div class="example">Example: $x_1, x_2 \geq 0$ (non-negativity)</div>
+                            </div>
+                        </div>
+
+                        <div class="lagrange-explanation">
+                            <h4>Lagrange Multipliers</h4>
+                            <p>For constrained optimization, we use the Lagrangian:</p>
+                            <div class="math-display">$$L(x, \lambda) = f(x) + \lambda g(x)$$</div>
+                            <p>The optimal solution satisfies: $\nabla_x L = 0$ and $g(x) = 0$</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Algorithms Section -->
+    <section id="algorithms" class="section bg-light">
+        <div class="container">
+            <h2>Optimization Algorithms</h2>
+            <div class="algorithm-grid">
+                <div class="algorithm-card">
+                    <h3>Gradient Descent</h3>
+                    <p>The workhorse of machine learning optimization</p>
+                    <div class="algorithm-steps">
+                        <ol>
+                            <li>Start with initial guess $x_0$</li>
+                            <li>Compute gradient $\nabla f(x_k)$</li>
+                            <li>Update: $x_{k+1} = x_k - \alpha \nabla f(x_k)$</li>
+                            <li>Repeat until convergence</li>
+                        </ol>
+                    </div>
+                    <button class="btn-demo" onclick="showGradientDescent()">Visualize</button>
+                </div>
+
+                <div class="algorithm-card">
+                    <h3>Newton's Method</h3>
+                    <p>Faster convergence using second-order information</p>
+                    <div class="algorithm-steps">
+                        <ol>
+                            <li>Start with initial guess $x_0$</li>
+                            <li>Compute gradient $\nabla f(x_k)$ and Hessian $H_k$</li>
+                            <li>Update: $x_{k+1} = x_k - H_k^{-1} \nabla f(x_k)$</li>
+                            <li>Repeat until convergence</li>
+                        </ol>
+                    </div>
+                    <button class="btn-demo" onclick="showNewtonMethod()">Visualize</button>
+                </div>
+
+                <div class="algorithm-card">
+                    <h3>Adam Optimizer</h3>
+                    <p>Adaptive learning rates for modern deep learning</p>
+                    <div class="algorithm-formula">
+                        <div class="math-display">
+                            $$m_t = \beta_1 m_{t-1} + (1-\beta_1) g_t$$
+                            $$v_t = \beta_2 v_{t-1} + (1-\beta_2) g_t^2$$
+                            $$x_{t+1} = x_t - \frac{\alpha}{\sqrt{v_t} + \epsilon} m_t$$
+                        </div>
+                    </div>
+                    <button class="btn-demo" onclick="showAdam()">Visualize</button>
+                </div>
+
+                <div class="algorithm-card">
+                    <h3>Simulated Annealing</h3>
+                    <p>Global optimization for non-convex problems</p>
+                    <div class="algorithm-steps">
+                        <ol>
+                            <li>Start with high "temperature" $T$</li>
+                            <li>Generate random neighbor solution</li>
+                            <li>Accept if better, or with probability $e^{-\Delta E/T}$</li>
+                            <li>Gradually reduce temperature</li>
+                        </ol>
+                    </div>
+                    <button class="btn-demo" onclick="showSimulatedAnnealing()">Visualize</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section id="applications" class="section">
+        <div class="container">
+            <h2>Real-World Applications</h2>
+            <div class="application-tabs">
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="ml-basics">ML Basics</button>
+                    <button class="tab-btn" data-tab="deep-learning">Deep Learning</button>
+                    <button class="tab-btn" data-tab="hyperparameter">Hyperparameter Tuning</button>
+                    <button class="tab-btn" data-tab="portfolio">Portfolio Optimization</button>
+                </div>
+
+                <div id="ml-basics" class="tab-content active">
+                    <h3>Linear Regression: A Simple Case Study</h3>
+                    <p>Let's see how optimization works in the simplest machine learning model.</p>
+                    
+                    <div class="problem-setup">
+                        <h4>Problem Setup</h4>
+                        <p>We want to find the best line $y = wx + b$ to fit our data points.</p>
+                        <p>Loss function (Mean Squared Error): $L(w,b) = \frac{1}{n}\sum_{i=1}^n (y_i - wx_i - b)^2$</p>
+                    </div>
+
+                    <div class="interactive-regression">
+                        <canvas id="regressionCanvas" width="500" height="300"></canvas>
+                        <div class="regression-controls">
+                            <div>
+                                <label>Weight (w): <input type="range" id="weightSlider" min="-2" max="2" step="0.1" value="1"></label>
+                                <span id="weightValue">1.0</span>
+                            </div>
+                            <div>
+                                <label>Bias (b): <input type="range" id="biasSlider" min="-2" max="2" step="0.1" value="0"></label>
+                                <span id="biasValue">0.0</span>
+                            </div>
+                            <div>
+                                <span>Loss: <span id="lossValue">0.00</span></span>
+                            </div>
+                            <button id="optimizeRegression" class="btn-demo">Auto-Optimize</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="deep-learning" class="tab-content">
+                    <h3>Neural Network Training</h3>
+                    <p>Understanding how backpropagation uses optimization to train neural networks.</p>
+                    
+                    <div class="network-diagram">
+                        <canvas id="networkCanvas" width="500" height="300"></canvas>
+                    </div>
+                    
+                    <div class="backprop-explanation">
+                        <h4>Backpropagation Algorithm</h4>
+                        <ol>
+                            <li><strong>Forward Pass:</strong> Compute predictions and loss</li>
+                            <li><strong>Backward Pass:</strong> Compute gradients using chain rule</li>
+                            <li><strong>Update:</strong> Adjust weights using gradient descent</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div id="hyperparameter" class="tab-content">
+                    <h3>Hyperparameter Optimization</h3>
+                    <p>Finding the best hyperparameters is itself an optimization problem!</p>
+                    
+                    <div class="hyperparameter-methods">
+                        <div class="method">
+                            <h4>Grid Search</h4>
+                            <p>Exhaustively search over a grid of hyperparameter values</p>
+                            <div class="pros-cons">
+                                <div class="pros">✓ Guaranteed to find best in grid</div>
+                                <div class="cons">✗ Computationally expensive</div>
+                            </div>
+                        </div>
+                        <div class="method">
+                            <h4>Random Search</h4>
+                            <p>Randomly sample from hyperparameter distributions</p>
+                            <div class="pros-cons">
+                                <div class="pros">✓ More efficient than grid search</div>
+                                <div class="cons">✗ No guarantee of finding optimum</div>
+                            </div>
+                        </div>
+                        <div class="method">
+                            <h4>Bayesian Optimization</h4>
+                            <p>Use probabilistic model to guide search</p>
+                            <div class="pros-cons">
+                                <div class="pros">✓ Sample efficient</div>
+                                <div class="cons">✗ Complex to implement</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="portfolio" class="tab-content">
+                    <h3>Portfolio Optimization</h3>
+                    <p>Markowitz portfolio theory: maximizing return while minimizing risk.</p>
+                    
+                    <div class="portfolio-problem">
+                        <h4>Mathematical Formulation</h4>
+                        <p>Minimize portfolio variance: $\min \frac{1}{2} w^T \Sigma w$</p>
+                        <p>Subject to: $\sum w_i = 1$ (budget constraint) and $\mu^T w \geq r_{target}$ (return constraint)</p>
+                    </div>
+                    
+                    <div class="efficient-frontier">
+                        <canvas id="portfolioCanvas" width="500" height="300"></canvas>
+                        <div class="portfolio-controls">
+                            <label>Target Return: <input type="range" id="returnSlider" min="5" max="15" step="0.5" value="10"></label>
+                            <span id="returnValue">10%</span>
+                            <button id="calculatePortfolio" class="btn-demo">Calculate Optimal Portfolio</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Practice Section -->
+    <section id="practice" class="section bg-light">
+        <div class="container">
+            <h2>Practice Problems</h2>
+            <div class="practice-grid">
+                <div class="problem-card">
+                    <h3>Problem 1: Basic Optimization</h3>
+                    <p>Find the minimum of $f(x) = x^4 - 4x^3 + 6x^2 - 4x + 1$</p>
+                    <div class="problem-hints">
+                        <button class="hint-btn" onclick="showHint(1)">💡 Hint</button>
+                        <div id="hint1" class="hint hidden">Start by finding where $f'(x) = 0$</div>
+                    </div>
+                    <div class="solution-area">
+                        <textarea placeholder="Write your solution here..."></textarea>
+                        <button class="check-btn">Check Answer</button>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <h3>Problem 2: Constrained Optimization</h3>
+                    <p>Minimize $f(x,y) = x^2 + y^2$ subject to $x + y = 1$</p>
+                    <div class="problem-hints">
+                        <button class="hint-btn" onclick="showHint(2)">💡 Hint</button>
+                        <div id="hint2" class="hint hidden">Use Lagrange multipliers: $\nabla f = \lambda \nabla g$</div>
+                    </div>
+                    <div class="solution-area">
+                        <textarea placeholder="Write your solution here..."></textarea>
+                        <button class="check-btn">Check Answer</button>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <h3>Problem 3: Machine Learning</h3>
+                    <p>Implement gradient descent for logistic regression</p>
+                    <div class="code-editor">
+                        <textarea class="code-input" placeholder="def gradient_descent_logistic(X, y, learning_rate=0.01, epochs=1000):
+    # Your code here
+    pass"></textarea>
+                        <button class="run-code-btn">Run Code</button>
+                        <div class="code-output"></div>
+                    </div>
+                </div>
+
+                <div class="problem-card quiz-card">
+                    <h3>Quick Quiz</h3>
+                    <div class="quiz-question">
+                        <p>Which algorithm typically converges faster?</p>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="gd"> Gradient Descent</label>
+                            <label><input type="radio" name="q1" value="newton"> Newton's Method</label>
+                            <label><input type="radio" name="q1" value="sgd"> SGD</label>
+                        </div>
+                        <button class="quiz-submit">Submit</button>
+                        <div class="quiz-feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>OptimizeDS</h4>
+                    <p>A comprehensive learning platform for optimization in data science, designed by IIT faculty.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#fundamentals">Mathematical Foundations</a></li>
+                        <li><a href="#algorithms">Algorithms</a></li>
+                        <li><a href="#applications">Applications</a></li>
+                        <li><a href="#practice">Practice Problems</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>For questions or feedback about this learning platform.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 OptimizeDS - IIT Learning Platform. Educational use only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
